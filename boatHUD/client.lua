@@ -264,5 +264,5 @@ if AnchorScript == "On" then
 	RegisterCommand('toggleAnchor', toggleAnchor, false)
 
 	-- Register key mapping to the toggle command
-	RegisterKeyMapping('toggleAnchor', 'Toggle Boat Anchor', 'keyboard', 'ADD')
+	RegisterKeyMapping('toggleAnchor', 'Toggle Boat Anchor', 'keyboard', 'SUBTRACT')
 end
