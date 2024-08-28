@@ -25,6 +25,8 @@ From xabyuce: “Hi! Feel free to modify and release it!"
 ```
 Credits to [xabypuce](https://forum.cfx.re/u/xabypuce/summary): [[Release][Free] Helicopter & Plane HUD](https://forum.cfx.re/t/release-free-helicopter-plane-hud/4911979). Go download it! It pairs really well with BoatHUD!
 
+# SUPPORT:
+
 **Contact [blackfirefly000](https://github.com/blackfirefly000) on [Discord](https://discord.gg/YNJxjDMQdF) or the [FiveM Forums](https://forum.cfx.re/u/blackfirefly000/summary) for suggestions, comments, support, and other concerns. Support is mainly provided on discord. If you would like to assist in the project, message me on Discord or through the FiveM forums.**
 
 # INSTALLATION | REQUIREMENTS | DOWNLOAD | HOW TO USE:
