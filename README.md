@@ -37,7 +37,7 @@ Credits to [xabypuce](https://forum.cfx.re/u/xabypuce/summary): [[Release][Free]
     * NONE!
 
 * **DOWNLOAD:**
-    * **[DOWNLOAD HERE](https://github.com/blackfirefly000/AIBackup2/releases)**
+    * **[DOWNLOAD HERE](https://github.com/blackfirefly000/BoatHUD/releases)**
 
 * **OPTIONAL ANCHOR SCRIPT:**
     * To anchor the boat: "-" in your NUMPAD 
