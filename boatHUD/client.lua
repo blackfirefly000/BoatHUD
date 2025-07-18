@@ -30,37 +30,9 @@ DO NOT EDIT ANYTHING BELOW THIS IF YOU DON'T KNOW WHAT YOU'RE DOING!
 ]]--
 
 
-
-
-function Text(text, x, y, scale)
-    SetTextFont(4)
-    SetTextProportional(0)
-    SetTextScale(scale, scale)
-    SetTextEdge(1, 0, 0, 0, 255)
-    SetTextDropShadow(0, 0, 0, 0,255)
-    SetTextOutline()
-	SetTextJustification(0)
-    SetTextEntry("STRING")
-    AddTextComponentString(text)
-    DrawText(x, y)
-end
-
-function Vector3ToCompassHeading(vector)
-    -- Calculate the angle in radians
-    local angle = math.atan2(vector.y, vector.x)
-    -- Convert angle to degrees
-    local angleDeg = math.deg(angle)
-    -- Normalize angle to be within 0 to 360 degrees
-    if angleDeg < 0 then
-        angleDeg = angleDeg + 360
-    end
-    return angleDeg
-end
-
-
 Citizen.CreateThread(function()
     while true do
-        Citizen.Wait(1)			
+        Citizen.Wait(3)			
 		-------------------------BOAT-------------------
 		local ped = PlayerPedId()
 		local boat = IsPedInAnyBoat(ped)
@@ -81,8 +53,6 @@ Citizen.CreateThread(function()
 		local oilTemp = GetVehicleDashboardOilTemp(pedVehicle)
 		local hullHealth = GetVehicleBodyHealth(pedVehicle)
 		local upsideDown = IsEntityUpsidedown(pedVehicle)
-		local _, headLightsOn = GetVehicleLightsState(pedVehicle)
-		local _, _, highBeamsOn = GetVehicleLightsState(pedVehicle)
 		local waterDepth =  GetEntityHeightAboveGround(pedVehicle)
 		local onFire = IsEntityOnFire(pedVehicle)
 		local isAnchored = IsBoatAnchoredAndFrozen(pedVehicle)
@@ -213,27 +183,67 @@ Citizen.CreateThread(function()
 				Text("~w~,", UI.x + 0.599, UI.y + 0.476, 0.37)
 				Text(string.format("%.f", coords.y), UI.x + 0.609, UI.y + 0.476, 0.363)
 			end
+		end
+	end
+end)
 
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(1)
+		local ped = PlayerPedId()
+		local boat = IsPedInAnyBoat(ped)
+		local pedVehicle = GetVehiclePedIsIn(ped,false)
+		local _, headLightsOn = GetVehicleLightsState(pedVehicle)
+		local _, _, highBeamsOn = GetVehicleLightsState(pedVehicle)
+		local inDriverSeat = GetPedInVehicleSeat(GetVehiclePedIsIn(PlayerPedId()), -1) == ped
+		local inPassengerSeat = GetPedInVehicleSeat(GetVehiclePedIsIn(PlayerPedId()), 0) == ped
+		local engine = GetIsVehicleEngineRunning(pedVehicle)
+
+		if boat and (inDriverSeat or inPassengerSeat) then	
+				
 			--UI
 			if (headLightsOn == 1 or highBeamsOn == 1) and engine then   --green hud
-				Text("~g~SPEED", UI.x + 0.5145, UI.y + 0.508, 0.35)
-				Text("~g~DEPTH", UI.x + 0.4685, UI.y + 0.508, 0.35)
-				Text("~g~FUEL", UI.x + 0.438, UI.y + 0.508, 0.35)
-				Text("~g~HEADING", UI.x + 0.561, UI.y + 0.508, 0.35)
-				Text("~g~COORDS", UI.x + 0.599, UI.y + 0.508, 0.35)
-				-- Big rectangles on the ui
-				DrawRect(UI.x + 0.5, UI.y + 0.5, 0.255, 0.085, 143, 234, 27, 255) --exterior abajo
+				--text colors
+				t1 = 114
+				t2 = 204
+				t3 = 114
+				t4 = 255
+				--outline colors
+				o1 = 143
+				o2 = 234
+				o3 = 27
+				o4 = 255
+				--background colors
+				bg1 = 0
+				bg2 = 0
+				bg3 = 0
+				bg4 = 255		
 			else    --greyhud --
-				Text("~w~SPEED", UI.x + 0.5145, UI.y + 0.508, 0.35)
-				Text("~w~DEPTH", UI.x + 0.4685, UI.y + 0.508, 0.35)
-				Text("~w~FUEL", UI.x + 0.438, UI.y + 0.508, 0.35)
-				Text("~w~HEADING", UI.x + 0.561, UI.y + 0.508, 0.35)
-				Text("~w~COORDS", UI.x + 0.599, UI.y + 0.508, 0.35)
-				-- Big rectangles on the ui
-				DrawRect(UI.x + 0.5, UI.y + 0.5, 0.255, 0.085, 40, 40, 40, 255) --exterior abajo
+				--text colors
+				t1 = 240
+				t2 = 240
+				t3 = 240
+				t4 = 255
+				--outline colors
+				o1 = 110
+				o2 = 110
+				o3 = 110
+				o4 = 255
+				--background colors
+				bg1 = 40
+				bg2 = 40
+				bg3 = 40
+				bg4 = 255
 			end
+			Text("SPEED", UI.x + 0.5145, UI.y + 0.508, 0.35, t1, t2, t3, t4)
+			Text("DEPTH", UI.x + 0.4685, UI.y + 0.508, 0.35, t1, t2, t3, t4)
+			Text("FUEL", UI.x + 0.438, UI.y + 0.508, 0.35, t1, t2, t3, t4)
+			Text("HEADING", UI.x + 0.561, UI.y + 0.508, 0.35, t1, t2, t3, t4)
+			Text("COORDS", UI.x + 0.599, UI.y + 0.508, 0.35, t1, t2, t3, t4)
+			-- Big rectangles on the ui
+			DrawRect(UI.x + 0.5, UI.y + 0.5, 0.255, 0.085, o1, o2, o3, o4) --exterior abajo
 			--main UI
-			DrawRect(UI.x + 0.5, UI.y + 0.5, 0.25, 0.075, 0, 0, 0, 255) -- Base
+			DrawRect(UI.x + 0.5, UI.y + 0.5, 0.25, 0.075, bg1, bg2, bg3, bg4) -- Base
 			-- Smaller squares in the rectangles.
 			DrawRect(UI.x + 0.4, UI.y + 0.5, 0.040, 0.051, 51, 62, 52, 255) --Warning Panel
 			DrawRect(UI.x + 0.438, UI.y + 0.49, 0.025, 0.032, 51, 62, 52, 255)	--Fuel Panel			
@@ -265,4 +275,34 @@ if AnchorScript == "On" then
 
 	-- Register key mapping to the toggle command
 	RegisterKeyMapping('toggleAnchor', 'Toggle Boat Anchor', 'keyboard', 'SUBTRACT')
+end
+
+function Text(text, x, y, scale, r, g, b, a)
+    SetTextFont(4)
+    SetTextProportional(0)
+    SetTextScale(scale, scale)
+    SetTextEdge(1, 0, 0, 0, 255)
+    SetTextDropShadow(0, 0, 0, 0,255)
+    SetTextOutline()
+	SetTextJustification(0)
+    SetTextEntry("STRING")
+    AddTextComponentString(text)
+	r = r or 240
+	g = g or 240
+	b = b or 240
+	a = a or 255
+	SetTextColour(r, g, b, a)
+    DrawText(x, y)		
+end
+
+function Vector3ToCompassHeading(vector)
+    -- Calculate the angle in radians
+    local angle = math.atan2(vector.y, vector.x)
+    -- Convert angle to degrees
+    local angleDeg = math.deg(angle)
+    -- Normalize angle to be within 0 to 360 degrees
+    if angleDeg < 0 then
+        angleDeg = angleDeg + 360
+    end
+    return angleDeg
 end
